@@ -26,7 +26,7 @@ public class Main {
 //        writer.writeObjects(graduateList);
 
         Commands commands = new Commands();
-        commands.b("ISA","Gigel","vieru","darkfury@yahoo.com");
+        commands.cf("ISA","Gigel", StudyField.FIELDS.SOFTWARE_ENGINEERING);
 //        Reader reader = new Reader();
 //        studentList= reader.readObjects("src/docs/Student.ser",Student.class);
 //        facultyList = reader.readObjects("src/docs/Faculty.ser",Faculty.class);

@@ -82,6 +82,7 @@ public class Commands {
 
     }
     public void cf(String name, String abbreviation, StudyField.FIELDS studyField) {
+//        ????????????????????????????????????? how to studyfield
 //        Student student = new Student(firstName, lastName, email, enrollmentDate, dateOfBirth);
         Reader reader = new Reader();
 //        Boolean found = Boolean.FALSE;
