@@ -11,6 +11,7 @@ public class Reader {
     public Reader() {
         objPaths.put("src/docs/Faculty.ser", "src.Faculty");
         objPaths.put("src/docs/Student.ser", "src.Student");
+        objPaths.put("src/docs/Graduate.ser", "src.Graduate");
         objPaths.put("src/docs/StudyFiled.ser", "src.StudyField");
     }
 

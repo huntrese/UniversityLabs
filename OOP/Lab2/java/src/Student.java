@@ -63,4 +63,8 @@ class Student implements Serializable{
         this.lastName = lastName;
     }
 
+    public void getStudentInfo(){
+        System.out.println(String.format("Name: %s, Surname: %s, Email: %s, Enrolled: %s, Born: %s",firstName,lastName,email,enrollmentDate,dateOfBirth));
+    }
+
 }

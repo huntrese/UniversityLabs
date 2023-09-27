@@ -61,4 +61,7 @@ class Graduate implements Serializable{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public void getStudentInfo(){
+        System.out.println(String.format("Name: %s, Surname: %s, Email: %s, Enrolled: %s, Born: %s",firstName,lastName,email,enrollmentDate,dateOfBirth));
+    }
 }

@@ -17,6 +17,13 @@ public class Faculty implements  Serializable {
         this.studyField=studyField;
 
     }
+    public Faculty(String name, String abbreviation, StudyField.FIELDS studyField){
+        this.name=name;
+        this.abbreviation=abbreviation;
+        this.students=students;
+        this.studyField=studyField;
+
+    }
 
     public StudyField.FIELDS getStudyField() {
         return studyField;
