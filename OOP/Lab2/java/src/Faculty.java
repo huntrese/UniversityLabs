@@ -7,6 +7,8 @@ public class Faculty implements  Serializable {
     private String abbreviation;
     private List<Student> students;
     private StudyField.FIELDS studyField;
+    private static final long serialVersionUID = 1L;
+
 
     public Faculty(String name, String abbreviation, List<Student> students, StudyField.FIELDS studyField){
         this.name=name;

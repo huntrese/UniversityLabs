@@ -10,6 +10,8 @@ class Student implements Serializable{
     private String email;
     private Date enrollmentDate;
     private Date dateOfBirth;
+    private static final long serialVersionUID = 1L;
+
 
 
     public Student(String firstName,String lastName,String email, Date enrollmentDate, Date dateOfBirth){

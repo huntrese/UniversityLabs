@@ -9,22 +9,24 @@ public class Main {
         List<Student> studentList= new ArrayList<>();
         List<Faculty> facultyList= new ArrayList<>();
 
-//        Student gigel = new Student("Gigel", "vieru", "darkfury@yahoo.com", new Date(), new Date());
-//        Student vasea = new Student("vasea", "igor", "dimony@yahoo.com", new Date(), new Date());
-//        studentList.add(gigel);
-//        studentList.add(vasea);
+        Student gigel = new Student("Gigel", "vieru", "darkfury@yahoo.com", new Date(), new Date());
+        Student vasea = new Student("vasea", "igor", "dimony@yahoo.com", new Date(), new Date());
+        studentList.add(gigel);
+        studentList.add(vasea);
 
-//        Faculty isa= new Faculty("SOFT","ISA", studentList, StudyField.FIELDS.SOFTWARE_ENGINEERING);
-//        facultyList.add(isa);
+        Faculty isa= new Faculty("SOFT","ISA", studentList, StudyField.FIELDS.SOFTWARE_ENGINEERING);
+        facultyList.add(isa);
 
-//        Writer writer = new Writer();
-//        writer.writeObjects(facultyList);
+        Writer writer = new Writer();
+        writer.writeObjects(facultyList);
 
+        Commands commands = new Commands();
+        commands.as("ISA","mihai","prodius","email",new Date(),new Date());
         Reader reader = new Reader();
-        studentList= reader.readObjects("src/docs/Student.ser",Student.class);
+//        studentList= reader.readObjects("src/docs/Student.ser",Student.class);
         facultyList = reader.readObjects("src/docs/Faculty.ser",Faculty.class);
         System.out.println(studentList.get(0).getFirstName());
-        System.out.println(facultyList.get(0).getAbbreviation());
+        System.out.println(facultyList.get(0).getStudents().get(2).getFirstName());
 
     }
 }
