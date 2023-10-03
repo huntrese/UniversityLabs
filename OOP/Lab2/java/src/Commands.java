@@ -74,7 +74,7 @@ public class Commands {
         for (Student student : studentList) {
             student.getStudentInfo();
         }
-        // TODO not log everything only state changes
+
 
     }
 

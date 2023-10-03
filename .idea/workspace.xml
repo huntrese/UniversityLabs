@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e9703450-711d-4a8b-a6e2-bf187a7da0ea" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/CommandLineInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/CommandLineInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/Faculty.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/Faculty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/StudyField.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/StudyField.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectId" id="2Vz650PoA4YUAWsxhKUUK6ujALt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vladp/IdeaProjects/UniversityLabs/OOP/Lab2/java&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e9703450-711d-4a8b-a6e2-bf187a7da0ea" name="Changes" comment="" />
+      <created>1695826374331</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695826374331</updated>
+      <workItem from="1695826376529" duration="79000" />
+      <workItem from="1695826458231" duration="15000" />
+      <workItem from="1695826484703" duration="55000" />
+      <workItem from="1696151954667" duration="7000" />
+      <workItem from="1696315938701" duration="226000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/OOP_Lab2" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
