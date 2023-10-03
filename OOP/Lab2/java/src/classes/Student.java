@@ -1,24 +1,28 @@
-package src;
+package src.classes;
 
 import java.util.Date;
 import java.io.*;
 
-class Graduate implements Serializable{
+public class Student implements Serializable{
 
     private String firstName;
     private String lastName;
     private String email;
     private Date enrollmentDate;
     private Date dateOfBirth;
+    private String faculty;
+
     private static final long serialVersionUID = 1L;
 
 
-    public Graduate(String firstName,String lastName,String email, Date enrollmentDate, Date dateOfBirth){
+
+    public Student(String firstName,String lastName,String email, Date enrollmentDate, Date dateOfBirth, String faculty){
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
         this.enrollmentDate=enrollmentDate;
         this.dateOfBirth=dateOfBirth;
+        this.faculty=faculty;
 
     }
 
@@ -61,7 +65,17 @@ class Graduate implements Serializable{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public void getStudentInfo(){
-        System.out.println(String.format("Name: %s, Surname: %s, Email: %s, Enrolled: %s, Born: %s",firstName,lastName,email,enrollmentDate,dateOfBirth));
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void getStudentInfo(){
+        System.out.println(String.format("Name: %s, Surname: %s, Email: %s, Faculty: %s, Enrolled: %s, Born: %s",firstName,lastName,email,faculty,enrollmentDate,dateOfBirth));
+    }
+
 }

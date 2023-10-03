@@ -1,0 +1,46 @@
+vladp/Windows 101000159188 [2023-10-03 12:14:54]:   Added student(Ion, Vieru) in DG
+vladp/Windows 101000159188 [2023-10-03 12:32:26]:   Created faculty Fcim, fcim, of SOFTWARE_ENGINEERING
+vladp/Windows 101000159188 [2023-10-03 12:55:23]:   Added student(John, Smith) in ISA
+vladp/Windows 101000159188 [2023-10-03 12:55:23]:   Added student(Alice, Johnson) in ISA
+vladp/Windows 101000159188 [2023-10-03 12:55:23]:   Added student(Bob, Miller) in ISA
+vladp/Windows 101000159188 [2023-10-03 12:55:23]:   Added student(Eva, Williams) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:11:50]:   Added student(Ion, Victor) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:16:31]:   Added student(Gigel, Student) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:18:58]:   Added student(Gigel, Student) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:20:06]:   Added student(Gigel, Student) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:24:32]:   Added student(Ion, Victor) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:24:56]:   Added student(Ion, Victor) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:28:41]:   Graduated student(Ion, Victor) from ISA
+vladp/Windows 101000159188 [2023-10-03 14:29:39]:   Graduated student(Ion, Victor) from ISA
+vladp/Windows 101000159188 [2023-10-03 14:29:56]:   Graduated student(Ion, Victor) from ISA
+vladp/Windows 101000159188 [2023-10-03 14:34:55]:   Created faculty ISA, ISA, of SOFTWARE_ENGINEERING
+vladp/Windows 101000159188 [2023-10-03 14:37:31]:   Added student(VICTOR, GIGEL) in ISA
+vladp/Windows 101000159188 [2023-10-03 14:38:14]:   Graduated student(VICTOR, GIGEL) from ISA
+vladp/Windows 101000159188 [2023-10-03 15:52:50]:   Added student(gigcu, gicu) in ISA
+vladp/Windows 101000159188 [2023-10-03 15:53:22]:   Added student(gigcu, gicu) in INTERESTING
+vladp/Windows 101000159188 [2023-10-03 15:54:02]:   Created faculty ISA, ISA, of SOFTWARE_ENGINEERING
+vladp/Windows 101000159188 [2023-10-03 15:54:13]:   Added student(gigcu, gicu) in ISA
+vladp/Windows 101000159188 [2023-10-03 15:54:40]:   Graduated student(gigcu, gicu) from isa
+vladp/Windows 101000159188 [2023-10-03 15:57:00]:   Graduated student(gigcu, gicu) from isa
+vladp/Windows 101000159188 [2023-10-03 15:59:45]:   Added student(John, Smith) in ISA
+vladp/Windows 101000159188 [2023-10-03 15:59:45]:   Added student(Alice, Johnson) in ISA
+vladp/Windows 101000159188 [2023-10-03 15:59:45]:   Added student(Bob, Miller) in ISA
+vladp/Windows 101000159188 [2023-10-03 15:59:45]:   Added student(Eva, Williams) in ISA
+vladp/Windows 101000159188 [2023-10-03 16:00:42]:   Graduated student(Bob, Miller) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:02:13]:   Graduated student(Bob, Miller) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:06:03]:   Graduated student(gigcu, gicu) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:07:36]:   Graduated student(Eva, Williams) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:08:43]:   Chcked belonging of student(John, Smith) in ISA
+vladp/Windows 101000159188 [2023-10-03 16:09:08]:   Chcked belonging of student(John, Smith) in ISA
+vladp/Windows 101000159188 [2023-10-03 16:09:27]:   Created faculty Design, DG, of SOFTWARE_ENGINEERING
+vladp/Windows 101000159188 [2023-10-03 16:13:51]:   Added student(John, Smith) in ISA
+vladp/Windows 101000159188 [2023-10-03 16:13:51]:   Added student(Alice, Johnson) in ISA
+vladp/Windows 101000159188 [2023-10-03 16:13:51]:   Added student(Bob, Miller) in ISA
+vladp/Windows 101000159188 [2023-10-03 16:13:51]:   Added student(Eva, Williams) in ISA
+vladp/Windows 101000159188 [2023-10-03 16:25:36]:   Graduated student(John, Smith) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:25:36]:   Graduated student(Alice, Johnson) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:25:36]:   Graduated student(Bob, Miller) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:25:36]:   Graduated student(Eva, Williams) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:26:06]:   Graduated student(John, Smith) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:26:06]:   Graduated student(Alice, Johnson) from ISA
+vladp/Windows 101000159188 [2023-10-03 16:26:06]:   Graduated student(Eva, Williams) from ISA
