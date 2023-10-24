@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e9703450-711d-4a8b-a6e2-bf187a7da0ea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/CommandLineInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/CommandLineInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/Faculty.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/Faculty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OOP/Lab2/java/src/StudyField.java" beforeDir="false" afterPath="$PROJECT_DIR$/OOP/Lab2/java/src/StudyField.java" afterDir="false" />
+    <list default="true" id="98b84bca-156a-4c76-99ad-a58c0afef89c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,36 +21,28 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
-  </component>
-  <component name="ProjectId" id="2Vz650PoA4YUAWsxhKUUK6ujALt" />
+  <component name="ProjectId" id="2XCcEtNHS0Czp5cZqKQ0eExu9lP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/vladp/IdeaProjects/UniversityLabs/OOP/Lab2/java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e9703450-711d-4a8b-a6e2-bf187a7da0ea" name="Changes" comment="" />
-      <created>1695826374331</created>
+      <changelist id="98b84bca-156a-4c76-99ad-a58c0afef89c" name="Changes" comment="" />
+      <created>1698136397229</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1695826374331</updated>
-      <workItem from="1695826376529" duration="79000" />
-      <workItem from="1695826458231" duration="15000" />
-      <workItem from="1695826484703" duration="55000" />
-      <workItem from="1696151954667" duration="7000" />
-      <workItem from="1696315938701" duration="226000" />
+      <updated>1698136397229</updated>
+      <workItem from="1698136401970" duration="82000" />
     </task>
     <servers />
   </component>
@@ -65,19 +54,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/OOP_Lab2" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
