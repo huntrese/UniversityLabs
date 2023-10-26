@@ -8,10 +8,10 @@ import java.security.NoSuchAlgorithmException;
 public class Tree extends GitObject {
     private String content;
 
-    public Tree(String name,String path) {
+    public Tree(String path) {
 
 
-        super(name,path);
+        super(path);
         this.content = "";
 
 
@@ -34,7 +34,8 @@ public class Tree extends GitObject {
             messageDigest = MessageDigest.getInstance("SHA-1");
 
             String data= getContent();
-            byte[] hash = messageDigest.digest(String.format("%s %s %s",getType(),data.getBytes().length,data).getBytes());
+//            System.out.println(String.format("%s %s\n%s",getType(),data.getBytes().length,data.getBytes()));
+            byte[] hash = messageDigest.digest(data.getBytes());
 
             // Convert the hash bytes to a hexadecimal string
             StringBuilder hexString = new StringBuilder();
@@ -54,12 +55,10 @@ public class Tree extends GitObject {
 
     @Override
     public byte[] readFileBytes() {
-//        System.out.println(getPath());
         try (InputStream inputStream = new FileInputStream(getPath())) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             int bytesRead;
             byte[] data = new byte[1024];
-//            System.out.println("started reading");
             while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
                 buffer.write(data, 0, bytesRead);
             }
@@ -76,14 +75,15 @@ public class Tree extends GitObject {
 
 
             String sha1Hash = calculateSHA1();
-            System.out.println("SHA-1 hash: " + sha1Hash + " " + getName());
+            System.out.println("SHA-1 hash: " + sha1Hash + " " + getPath());
             String fileHashDir = objPath + "/" + sha1Hash.substring(0, 2);
             Path fileHashPath = Paths.get(fileHashDir + "/" + sha1Hash.substring(2, sha1Hash.length()));
             if(!Files.exists(Paths.get(fileHashDir))) {
                 Files.createDirectory(Paths.get(fileHashDir));
             }
             Files.createFile(fileHashPath);
-            Files.write(fileHashPath, getContent().getBytes());
+            String data = getContent();
+            Files.write(fileHashPath, String.format("%s %s\n%s",getType(),data.getBytes().length,data).getBytes());
             return sha1Hash;
 
         }   catch (IOException e) {

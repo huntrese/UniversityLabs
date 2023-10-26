@@ -2,20 +2,52 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Blob extends GitObject {
     private byte[] content;
-
+    private String name;
+    private Long modifiedTime;
+    private String hash;
     public Blob(String name,String path) {
 
 
-        super(name,path);
+        super(path);
 //        System.out.println("created obj");
         this.content = readFileBytes();
+        this.name=name;
+        setModifiedTime();
 //        System.out.println("added content");
 
+
+    }
+
+    public void setModifiedTime() {
+        try {
+            BasicFileAttributeView attributes = java.nio.file.Files.getFileAttributeView(Paths.get(getPath()), BasicFileAttributeView.class);
+            BasicFileAttributes basicAttributes = null;
+            basicAttributes = attributes.readAttributes();
+            long modificationTime = basicAttributes.lastModifiedTime().toMillis();
+            this.modifiedTime = modificationTime;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public Long getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getHash() {
+        return hash;
     }
 
     @Override
@@ -45,7 +77,7 @@ public class Blob extends GitObject {
             }
             hexString.append(hex);
         }
-
+        this.hash= hexString.toString();
         return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);

@@ -1,19 +1,13 @@
 public abstract class GitObject {
     private String path;
-    private String name;
 
 
-    public GitObject(String name, String path) {
-        this.name = name;
+    public GitObject(String path) {
         this.path = path;
     }
 
     // Abstract method to be overridden by subclasses
     public abstract String getType();
-
-    public String getName() {
-        return name;
-    }
 
     public String getPath() {
         return path;

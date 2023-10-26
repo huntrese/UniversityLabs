@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,6 +8,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CLIInherit {
@@ -19,7 +21,7 @@ public class CLIInherit {
         try {
 
             if (args.length == 0) {
-                System.out.println("Usage: gat [options]");
+                System.out.println("Usage: gip [options]");
                 return;
             }
             String arg = args[0];
@@ -30,8 +32,8 @@ public class CLIInherit {
 
                         Files.createDirectories(Paths.get(objPath));
                         Files.createDirectories(Paths.get(headPath));
-                        Ref master = new Ref("master", "");
-                        System.out.println(master.getName());
+//                        Ref master = new Ref("master", "");
+//                        System.out.println(master.getPath());
 
 
                     } else{
@@ -41,16 +43,74 @@ public class CLIInherit {
                 case "commit":
                     File directory = new File(currentDirectory);
                     File[] files = directory.listFiles();
-                    for (File file: files) {
-                        if (!file.getName().equals(".gat") && !file.getName().equals(".gip")){
-//                            System.out.println(file.getName()+file.getPath());
-                            Blob blob = new Blob(file.getName(),file.getPath());
-                            blob.createHashDir(objPath);
+                    Tree tree = new Tree(objPath);
+                    Ref master = new Ref("master", "");
+                    List<String> previousFiles = new ArrayList<>();
+                    List<Long> previousModified = new ArrayList<>();
+                    List<String> previousHash = new ArrayList<>();
+                    int modified = 0;
+
+                    if(Files.exists(Paths.get(master.getPath()))) {
+                        String head = new String(master.readFileBytes(), StandardCharsets.UTF_8);
+                        System.out.println(head);
+
+                        List<String> lines = Files.readAllLines(getObj(head));
+                        System.out.println(lines);
+
+                        for (String line : lines.subList(1, lines.size())) {
+                            String[] splitLine = line.split("\\s+"); // Use "\\s+" as the delimiter
+                            System.out.println(splitLine[1] + " " + splitLine[2]);
+
+                            previousHash.add(splitLine[0]);
+                            previousFiles.add(String.join(" ", Arrays.copyOfRange(splitLine, 1, splitLine.length - 1)));
+                            previousModified.add(Long.parseLong(splitLine[splitLine.length - 1]));
+
 
                         }
-
+                        System.out.println(previousHash);
+                        System.out.println(previousFiles);
+                        System.out.println(previousModified);
                     }
+                    for (File file: files) {
+                        if (!file.isDirectory()) {
+                            if (previousFiles.contains(file.getName())) {
+                                int index= previousFiles.indexOf(file.getName());
 
+                                BasicFileAttributeView attributes = java.nio.file.Files.getFileAttributeView(Paths.get(file.getPath()), BasicFileAttributeView.class);
+                                BasicFileAttributes basicAttributes = null;
+                                basicAttributes = attributes.readAttributes();
+                                long modificationTime = basicAttributes.lastModifiedTime().toMillis();
+
+                                if (previousModified.get(index)==modificationTime){
+                                    System.out.println("same");
+                                    tree.addBlob(previousHash.get(index), previousFiles.get(index), previousModified.get(index));
+
+                                } else{
+                                    modified+=1;
+                                    Blob blob = new Blob(file.getName(),file.getPath());
+                                    blob.createHashDir(objPath);
+
+                                    tree.addBlob(blob.getHash(), blob.getName(), blob.getModifiedTime());
+
+                                }
+
+                            } else {
+//                            System.out.println(file.getName()+file.getPath());
+                                modified+=1;
+                                Blob blob = new Blob(file.getName(), file.getPath());
+                                blob.createHashDir(objPath);
+
+                                tree.addBlob(blob.getHash(), blob.getName(), blob.getModifiedTime());
+                            }
+                        }
+                    }
+                    if(modified!=0) {
+                        String treeHash = tree.createHashDir(objPath);
+                        System.out.println("ss" + tree.getPath() + treeHash);
+                        master.createHashDir(tree.getPath() + "/" + treeHash);
+                    }else {
+                        System.out.println("Nothing to commit");
+                    }
                     break;
                 case "fetch":
 
@@ -61,6 +121,26 @@ public class CLIInherit {
         }
 
     }
+    public static Path getObj(String findObj) {
+        try {
+            System.out.println(findObj);
+            File objects = new File(objPath);
+            for (File file: objects.listFiles()){
+                System.out.println(file.getName());
+                if(findObj.substring(0,2).equals(file.getName())){
+                    for(File object : file.listFiles()){
+                        if(findObj.substring(2,findObj.length()).equals(object.getName())){
+                            System.out.println("found");
+                            return Paths.get(object.getPath());
+                        }
+                    }
+                }
+            }
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }
 
