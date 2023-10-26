@@ -4,20 +4,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Ref extends GitObject {
-    private String content;
-    public Ref(String path,String content) {
-        super(".gip/refs/HEAD/"+ path);
-        this.content=content;
+public class Ref {
+    private String path;
+    public Ref(String path) {
+        this.path=".gip/refs/HEAD/"+ path;
     }
 
-    @Override
-    public String getType() {
-        return "reference";
+
+    public String getPath() {
+        return path;
     }
 
-    @Override
-    public String createHashDir(String treePath) {
+    public String createBranch(String treePath) {
 
         try {
 
@@ -36,8 +34,8 @@ public class Ref extends GitObject {
         return "Master updated";
     }
 
-    @Override
-    public byte[] readFileBytes() {
+
+    public byte[] readReference() {
         try {
             return Files.readAllLines(Paths.get(getPath())).get(0).getBytes();
 
@@ -46,8 +44,4 @@ public class Ref extends GitObject {
         }
     }
 
-    @Override
-    public String calculateSHA1() {
-        return null;
-    }
 }
