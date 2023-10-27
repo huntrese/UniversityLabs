@@ -6,8 +6,8 @@ import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public abstract class FileType {
-    private String name;
-    private String extension;
+    private final String name;
+    private final String extension;
     private Long modifiedTime;
     private Long createdTime;
 
@@ -21,8 +21,7 @@ public abstract class FileType {
 
         try {
             BasicFileAttributeView attributes = java.nio.file.Files.getFileAttributeView(Paths.get(name), BasicFileAttributeView.class);
-            BasicFileAttributes basicAttributes = null;
-            basicAttributes = attributes.readAttributes();
+            BasicFileAttributes basicAttributes = attributes.readAttributes();
             modifiedTime = basicAttributes.lastModifiedTime().toMillis();
             createdTime = basicAttributes.creationTime().toMillis();
 

@@ -1,7 +1,7 @@
 package gitObjects;
 
 public abstract class GitObject {
-    private String path;
+    private final String path;
 
 
     public GitObject(String path) {

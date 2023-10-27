@@ -2,6 +2,7 @@ package fileTypes;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,9 +26,9 @@ public class TextFiles extends FileType{
             File file = new File(getName());
             Path filePath = Paths.get(file.getPath());
             byte[] content = Files.readAllBytes(filePath);
-            characterCount = new String(content,"UTF-8").length();;
+            characterCount = new String(content, StandardCharsets.UTF_8).length();
             lineCount = Files.readAllLines(filePath).size();
-            wordCount = new String(content, "UTF-8").split("\\s+").length;
+            wordCount = new String(content, StandardCharsets.UTF_8).split("\\s+").length;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

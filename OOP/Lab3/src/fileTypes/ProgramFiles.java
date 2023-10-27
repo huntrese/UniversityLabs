@@ -2,6 +2,7 @@ package fileTypes;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,23 +24,23 @@ public class ProgramFiles extends FileType{
             String classPattern="";
             String methodPattern="";
             switch (getExtension()) {
-                case "java":
+                case "java" -> {
                     classPattern = "class\\s+\\w+";
                     methodPattern = "(public|protected|private|static|\\s) +[\\w<>\\[\\]]+\\s+(\\w+)\\s*\\([^)]*\\)\\s*(\\{?|[^;])";
-                    break;
-                case "py":
+                }
+                case "py" -> {
                     classPattern = "class\\s+\\w+";
                     methodPattern = "def\\s+(\\w+)\\s*\\([^)]*\\):";
-                    break;
+                }
             }
             File file = new File(getName());
                 Path filePath = Paths.get(file.getPath());
                 byte[] content = Files.readAllBytes(filePath);
                 lineCount = Files.readAllLines(filePath).size();
 
-                classCount = new String(content, "UTF-8").split(classPattern).length - 1;
+                classCount = new String(content, StandardCharsets.UTF_8).split(classPattern).length - 1;
 
-                methodCount = new String(content, "UTF-8").split(methodPattern).length - 1;
+                methodCount = new String(content, StandardCharsets.UTF_8).split(methodPattern).length - 1;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
