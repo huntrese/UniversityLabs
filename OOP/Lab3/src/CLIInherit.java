@@ -1,3 +1,10 @@
+import fileTypes.ImageFiles;
+import fileTypes.ProgramFiles;
+import fileTypes.TextFiles;
+import gitObjects.Blob;
+import gitObjects.Ref;
+import gitObjects.Tree;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -5,8 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,8 +39,6 @@ public class CLIInherit {
                         Files.createDirectories(Paths.get(objPath));
                         String headPath = refsPath + "/HEAD/";
                         Files.createDirectories(Paths.get(headPath));
-//                        Ref master = new Ref("master", "");
-//                        System.out.println(master.getPath());
 
 
                     } else{
@@ -53,14 +56,11 @@ public class CLIInherit {
 
                     if(Files.exists(Paths.get(master.getPath()))) {
                         String head = new String(master.readReference(), StandardCharsets.UTF_8);
-                        System.out.println(head);
 
                         List<String> lines = Files.readAllLines(getObj(head));
-                        System.out.println(lines);
 
                         for (String line : lines.subList(1, lines.size())) {
                             String[] splitLine = line.split("\\s+"); // Use "\\s+" as the delimiter
-                            System.out.println(splitLine[1] + " " + splitLine[2]);
 
                             previousHash.add(splitLine[0]);
                             previousFiles.add(String.join(" ", Arrays.copyOfRange(splitLine, 1, splitLine.length - 1)));
@@ -68,9 +68,6 @@ public class CLIInherit {
 
 
                         }
-                        System.out.println(previousHash);
-                        System.out.println(previousFiles);
-                        System.out.println(previousModified);
                     }
                     for (File file: files) {
                         if (!file.isDirectory()) {
@@ -83,8 +80,7 @@ public class CLIInherit {
                                 long modificationTime = basicAttributes.lastModifiedTime().toMillis();
 
                                 if (previousModified.get(index)==modificationTime){
-                                    System.out.println("same");
-                                    tree.addBlob(previousHash.get(index), previousFiles.get(index), previousModified.get(index));
+                                    tree.addBlob(previousHash.remove(index), previousFiles.remove(index), previousModified.remove(index));
 
                                 } else{
                                     modified+=1;
@@ -96,7 +92,6 @@ public class CLIInherit {
                                 }
 
                             } else {
-//                            System.out.println(file.getName()+file.getPath());
                                 modified+=1;
                                 Blob blob = new Blob(file.getName(), file.getPath());
                                 blob.createHashDir(objPath);
@@ -105,10 +100,13 @@ public class CLIInherit {
                             }
                         }
                     }
+
+                    modified+=previousFiles.size();
+
                     if(modified!=0) {
                         String treeHash = tree.createHashDir(objPath);
-                        System.out.println("ss" + tree.getPath() + treeHash);
-                        master.createBranch(tree.getPath() + "/" + treeHash);
+                        master.createBranch(treeHash);
+
                     }else {
                         System.out.println("Nothing to commit");
                     }
@@ -119,18 +117,14 @@ public class CLIInherit {
 
                         if(master !=null && Files.exists(Paths.get(master.getPath()))) {
                             String head = new String(master.readReference(), StandardCharsets.UTF_8);
-                            System.out.println(head);
 
                             List<String> lines = Files.readAllLines(getObj(head));
                             for (String line : lines.subList(1, lines.size())) {
-                                System.out.println(line);
                                 String[] splitLine = line.split("\\s+"); // Use "\\s+" as the delimiter
                                 String fileName = String.join(" ", Arrays.copyOfRange(splitLine, 1, splitLine.length - 1));
                                 String contentHash = splitLine[0];
-                                System.out.println(fileName);
                                 Path filePath = getObj(contentHash);
                                 byte[] fileContent = Files.readAllBytes(filePath);
-                                System.out.println(new String(fileContent, StandardCharsets.UTF_8).getBytes());
                                 // Create the file in the user's current directory
                                 createFileInCurrentDirectory(fileName, fileContent);
                         }
@@ -143,8 +137,83 @@ public class CLIInherit {
                     }
 
                     break;
+                case "status":
+                    File statusDirectory = new File(currentDirectory);
+                    File[] statusFiles = statusDirectory.listFiles();
+                    List<String> statusNames = new ArrayList<>();
+                    List<Long> statusModified = new ArrayList<>();
+
+
+                    if(Files.exists(Paths.get(master.getPath()))) {
+                        String head = new String(master.readReference(), "UTF-8");
+
+                        List<String> lines = Files.readAllLines(getObj(head));
+
+                        for (String line : lines.subList(1, lines.size())) {
+                            String[] splitLine = line.split("\\s+"); // Use "\\s+" as the delimiter
+
+                            statusNames.add(String.join(" ", Arrays.copyOfRange(splitLine, 1, splitLine.length - 1)));
+                            statusModified.add(Long.parseLong(splitLine[splitLine.length - 1]));
+
+
+                        }
+                    } else {
+                        System.out.println("No Commits Found");
+                        break;
+                    }
+                    for (File file: statusFiles) {
+                        if (!file.isDirectory()) {
+                            if (statusNames.contains(file.getName())) {
+                                int index= statusNames.indexOf(file.getName());
+
+                                BasicFileAttributeView attributes = java.nio.file.Files.getFileAttributeView(Paths.get(file.getPath()), BasicFileAttributeView.class);
+                                BasicFileAttributes basicAttributes = null;
+                                basicAttributes = attributes.readAttributes();
+                                long modificationTime = basicAttributes.lastModifiedTime().toMillis();
+
+                                if (statusModified.get(index)==modificationTime){
+                                    System.out.println(file.getName()+" No changes");
+
+                                } else{
+
+                                    System.out.println(file.getName() + " Changed");
+                                }
+                                statusNames.remove(index);
+                                statusModified.remove(index);
+
+                            } else {
+                                System.out.println(file.getName()+" Added");
+
+                            }
+                        }
+                    }
+                    for (String fileName:statusNames) {
+                        System.out.println(fileName+ " Removed");
+
+                    }
+                    break;
                 case "find":
+
                     getObj(args[1]);
+
+                    break;
+                case "info":
+                    String[] fileInfo = args[1].split("\\.");
+                    switch (fileInfo[1]){
+                        case "py", "java"->{
+                            ProgramFiles programFiles = new ProgramFiles(fileInfo);
+
+                        }
+                        case  "txt","doc","docx"->{
+                            TextFiles textFiles = new TextFiles(fileInfo);
+
+                        }
+                        case  "png","jpeg","jpg","jfif","webp"->{
+                            ImageFiles imageFiles = new ImageFiles(fileInfo);
+
+                        }
+                    }
+
                     break;
             }
             } catch (IOException e) {
@@ -154,14 +223,11 @@ public class CLIInherit {
     }
     public static Path getObj(String findObj) {
 
-        System.out.println(findObj);
         File objects = new File(objPath);
         for (File file: objects.listFiles()){
-            System.out.println(file.getName());
             if(findObj.substring(0,2).equals(file.getName())){
                 for(File object : file.listFiles()){
                     if(findObj.substring(2,findObj.length()).equals(object.getName())){
-                        System.out.println("found");
                         return Paths.get(object.getPath());
                     }
                 }

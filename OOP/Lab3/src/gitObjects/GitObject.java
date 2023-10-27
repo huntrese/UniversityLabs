@@ -1,3 +1,5 @@
+package gitObjects;
+
 public abstract class GitObject {
     private String path;
 

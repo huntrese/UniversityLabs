@@ -1,3 +1,5 @@
+package gitObjects;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,7 +32,9 @@ public class Blob extends GitObject {
             BasicFileAttributeView attributes = java.nio.file.Files.getFileAttributeView(Paths.get(getPath()), BasicFileAttributeView.class);
             BasicFileAttributes basicAttributes = null;
             basicAttributes = attributes.readAttributes();
+
             long modificationTime = basicAttributes.lastModifiedTime().toMillis();
+
             this.modifiedTime = modificationTime;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -91,7 +95,6 @@ public class Blob extends GitObject {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             int bytesRead;
             byte[] data = new byte[1024];
-//            System.out.println("started reading");
             while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
                 buffer.write(data, 0, bytesRead);
             }
@@ -108,11 +111,13 @@ public class Blob extends GitObject {
 
 
             String sha1Hash = calculateSHA1();
-            System.out.println("SHA-1 hash: " + sha1Hash + " " + getName());
             String fileHashDir = objPath + "/" + sha1Hash.substring(0, 2);
+            Path fileHashDirPath = Paths.get(fileHashDir);
             Path fileHashPath = Paths.get(fileHashDir + "/" + sha1Hash.substring(2, sha1Hash.length()));
-            if(!Files.exists(Paths.get(fileHashDir))) {
-                Files.createDirectory(Paths.get(fileHashDir));
+            if(!Files.exists(fileHashDirPath)) {
+                Files.createDirectory(fileHashDirPath);
+            }else{
+                Files.delete(fileHashPath);
             }
             Files.createFile(fileHashPath);
             Files.write(fileHashPath, getContent());
