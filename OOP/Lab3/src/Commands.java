@@ -137,7 +137,7 @@ public class Commands {
                     statusNames.remove(index);
                     statusModified.remove(index);
                 } else {
-                    System.out.println(fileName + " Added");
+                    System.console().writer().println(fileName + " Added");
                 }
             }
         }
@@ -210,15 +210,15 @@ public class Commands {
     }
     public static void handleTrack() {
 
-            while (true) {
-                handleStatus(true);
-                handleCommit(true);
-                try {
-                    Thread.sleep(5000); // Sleep for 5 seconds
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+
+        handleStatus(true);
+        handleCommit(true);
+        try {
+            Thread.sleep(5000); // Sleep for 5 seconds
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }
