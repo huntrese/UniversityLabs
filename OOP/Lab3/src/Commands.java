@@ -32,7 +32,7 @@ public class Commands {
         }
     }
 
-    public static void handleCommit() {
+    public static void handleCommit(Boolean isTrack) {
         File directory = new File(currentDirectory);
         File[] files = directory.listFiles();
         Tree tree = new Tree(objPath);
@@ -66,9 +66,13 @@ public class Commands {
             String treeHash = tree.createHashDir(objPath);
             master.createBranch(treeHash);
             System.out.println("Committed to: " + treeHash);
-        } else {
+        } else if (!isTrack) {
             System.out.println("Nothing to commit");
         }
+    }
+    public static void handleCommit(){
+        Boolean isTrack = false;
+        handleCommit(isTrack);
     }
 
     public static void handleFetch() {
@@ -98,7 +102,7 @@ public class Commands {
         }
     }
 
-    public static void handleStatus() {
+    public static void handleStatus(Boolean isTrack) {
         File statusDirectory = new File(currentDirectory);
         File[] statusFiles = statusDirectory.listFiles();
         List<String> statusNames = new ArrayList<>();
@@ -106,10 +110,11 @@ public class Commands {
 
         // Read previous commit's information
         readPreviousCommit(statusNames, statusModified, null);
-
         if (statusNames.isEmpty()) {
             System.out.println("No Commits Found");
             return;
+        } else if (!isTrack) {
+            System.out.println("Last snapshot at: "+new String(master.readSnapTime(),StandardCharsets.UTF_8));
         }
 
         assert statusFiles != null;
@@ -122,7 +127,9 @@ public class Commands {
                     long modificationTime = file.lastModified();
 
                     if (statusModified.get(index) == modificationTime) {
-                        System.out.println(fileName + " No changes");
+                        if (!isTrack) {
+                            System.out.println(fileName + " No changes");
+                        }
                     } else {
                         System.out.println(fileName + " Changed");
                     }
@@ -139,14 +146,23 @@ public class Commands {
             System.out.println(fileName + " Removed");
         }
     }
+    public static void handleStatus(){
+        Boolean isTrack = false;
+        handleStatus(isTrack);
+    }
 
     public static void handleInfo(String args) {
-        String[] fileInfo = args.split("\\.");
-        switch (fileInfo[1]) {
-            case "py", "java" -> new ProgramFiles(fileInfo);
-            case "txt", "doc", "docx" -> new TextFiles(fileInfo);
-            case "png", "jpeg", "jpg", "jfif", "webp" -> new ImageFiles(fileInfo);
-            default -> System.out.println("Unsupported file type: " + fileInfo[1]);
+
+        if (Files.exists(Paths.get(args))) {
+            String[] fileInfo = args.split("\\.");
+            switch (fileInfo[1]) {
+                case "py", "java" -> new ProgramFiles(fileInfo);
+                case "txt", "doc", "docx" -> new TextFiles(fileInfo);
+                case "png", "jpeg", "jpg", "jfif", "webp" -> new ImageFiles(fileInfo);
+                default -> System.out.println("Unsupported file type: " + fileInfo[1]);
+            }
+        }else {
+            System.out.println("File not found: "+args);
         }
     }
 
@@ -191,5 +207,18 @@ public class Commands {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static void handleTrack() {
+
+            while (true) {
+                handleStatus(true);
+                handleCommit(true);
+                try {
+                    Thread.sleep(5000); // Sleep for 5 seconds
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
     }
 }

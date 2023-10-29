@@ -34,13 +34,11 @@ public class ProgramFiles extends FileType{
                 }
             }
             File file = new File(getName());
-                Path filePath = Paths.get(file.getPath());
-                byte[] content = Files.readAllBytes(filePath);
-                lineCount = Files.readAllLines(filePath).size();
-
-                classCount = new String(content, StandardCharsets.UTF_8).split(classPattern).length - 1;
-
-                methodCount = new String(content, StandardCharsets.UTF_8).split(methodPattern).length - 1;
+            Path filePath = Paths.get(file.getPath());
+            byte[] content = Files.readAllBytes(filePath);
+            lineCount = Files.readAllLines(filePath).size();
+            classCount = new String(content, StandardCharsets.UTF_8).split(classPattern).length - 1;
+            methodCount = new String(content, StandardCharsets.UTF_8).split(methodPattern).length - 1;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
