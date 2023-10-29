@@ -137,7 +137,7 @@ public class Commands {
                     statusNames.remove(index);
                     statusModified.remove(index);
                 } else {
-                    System.console().writer().println(fileName + " Added");
+                    System.out.println(fileName + " Added");
                 }
             }
         }
@@ -221,4 +221,5 @@ public class Commands {
 
 
     }
+
 }

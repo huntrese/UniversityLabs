@@ -1,8 +1,7 @@
-import java.io.IOException;
 
 public class CLIInherit {
 
-    public static void main(String[] args) throws InterruptedException, IOException, IOException {
+    public static void main(String[] args){
 
         if (args.length == 0) {
             System.out.println("Usage: gip [options]");
@@ -16,11 +15,8 @@ public class CLIInherit {
             case "status" -> Commands.handleStatus();
             case "find" -> Commands.getObj(args[1]);
             case "info" -> Commands.handleInfo(args[1]);
-            case "track" -> {
-                ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "start", "/wait", "track.bat");
-                processBuilder.start();
+            case "track" -> Scheduler.handleScheduler();
 
-            }
         }
     }
 }
