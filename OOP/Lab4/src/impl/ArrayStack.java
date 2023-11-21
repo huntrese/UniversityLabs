@@ -2,14 +2,13 @@ package impl;
 
 import interfaces.Stack;
 
-import java.util.EmptyStackException;
 import java.util.LinkedList;
 
-public class LinkedListStack<T> implements Stack<T> {
+public class ArrayStack<T> implements Stack<T> {
     private LinkedList<T> list;
     private final int maxSize = 5; // Maximum size of the stack
 
-    public LinkedListStack() {
+    public ArrayStack() {
         list = new LinkedList<>();
     }
 
