@@ -1,8 +1,13 @@
+package impl;
+
+import interfaces.Stack;
+
 import java.util.EmptyStackException;
 import java.util.LinkedList;
 
 public class LinkedListStack<T> implements Stack<T> {
     private LinkedList<T> list;
+    private final int maxSize = 5; // Maximum size of the stack
 
     public LinkedListStack() {
         list = new LinkedList<>();
@@ -10,14 +15,16 @@ public class LinkedListStack<T> implements Stack<T> {
 
     @Override
     public void push(T item) {
+        if (isFull()) {
+            throw new IndexOutOfBoundsException("Stack is Full. Cannot add elements.");
+        }
         list.addFirst(item);
     }
 
     @Override
     public T pop() {
         if (isEmpty()) {
-            System.out.println("Stack is Empty.");
-            return null;
+            throw new IndexOutOfBoundsException("Stack is Empty. Cannot remove elements.");
         }
         return list.removeFirst();
     }
@@ -25,8 +32,7 @@ public class LinkedListStack<T> implements Stack<T> {
     @Override
     public T peek() {
         if (isEmpty()) {
-            System.out.println("Stack is Empty.");
-            return null;
+            throw new IndexOutOfBoundsException("Stack is Empty.");
         }
         return list.getFirst();
     }
@@ -39,5 +45,16 @@ public class LinkedListStack<T> implements Stack<T> {
     @Override
     public int size() {
         return list.size();
+    }
+
+    public void print(){
+        for (Object item: list  ) {
+            System.out.print(item+" ");
+        }
+        System.out.println();
+    }
+
+    public boolean isFull() {
+        return size() == maxSize;
     }
 }
