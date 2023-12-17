@@ -1,9 +1,7 @@
 import fileTypes.ImageFiles;
 import fileTypes.ProgramFiles;
 import fileTypes.TextFiles;
-import gitObjects.Blob;
-import gitObjects.Ref;
-import gitObjects.Tree;
+import gitObjects.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -15,14 +13,15 @@ public class Commands {
     private static final String directoryPath = ".gip"; // Replace with the desired directory name
     private static final String objPath = directoryPath + "/objects";
     private static final String refsPath = directoryPath + "/refs";
-    private static final Ref master = new Ref("master");
 
     public static void handleInit() {
         try {
             if (!Files.exists(Paths.get(directoryPath))) {
                 Files.createDirectories(Paths.get(objPath));
-                String headPath = refsPath + "/HEAD/";
-                Files.createDirectories(Paths.get(headPath));
+                Files.createDirectories(Paths.get(refsPath));
+                Ref HEAD = new Ref("HEAD");
+                HEAD.initialize();
+
                 System.out.println(".gip directory created");
             } else {
                 System.out.println(".gip directory already exists");
@@ -32,7 +31,7 @@ public class Commands {
         }
     }
 
-    public static void handleCommit(Boolean isTrack) {
+    public static Tree handleCommit(Boolean isTrack) {
         File directory = new File(currentDirectory);
         File[] files = directory.listFiles();
         Tree tree = new Tree(objPath);
@@ -42,7 +41,8 @@ public class Commands {
         int modified = 0;
 
         // Read previous commit's information
-        readPreviousCommit(previousFiles, previousModified, previousHash);
+        int succesfullCommitRead = readPreviousCommit(previousFiles, previousModified, previousHash);
+        if (succesfullCommitRead==1){return tree;}
         for (File file : files) {
             if (!file.isDirectory()) {
                 String fileName = file.getName();
@@ -64,25 +64,25 @@ public class Commands {
         modified+=previousFiles.size();
         if (modified > 0) {
             String treeHash = tree.createHashDir(objPath);
-            master.createBranch(treeHash);
+            Ref HEAD = new Ref("HEAD");
+            Branch branch = HEAD.getBranch();
+            branch.createBranch(treeHash);
             System.out.println("Committed to: " + treeHash);
+
+
         } else if (!isTrack) {
             System.out.println("Nothing to commit");
         }
+        return tree;
     }
-    public static void handleCommit(){
+    public static Tree handleCommit(){
         Boolean isTrack = false;
-        handleCommit(isTrack);
+        return handleCommit(isTrack);
+
     }
 
-    public static void handleFetch() {
+    public static void handleFetch(String head) {
         try {
-            if (!Files.exists(Paths.get(master.path()))) {
-                System.out.println("No Commits Found");
-                return;
-            }
-
-            String head = new String(master.readReference(), StandardCharsets.UTF_8);
             List<String> lines = Files.readAllLines(Objects.requireNonNull(getObj(head)));
             for (String line : lines.subList(1, lines.size())) {
                 String[] splitLine = line.split("\\s+"); // Use "\\s+" as the delimiter
@@ -101,20 +101,65 @@ public class Commands {
             e.printStackTrace();
         }
     }
+    public static void handleBranch(String name){
+        Branch branch = new Branch(name);
+        branch.createBranch(handleCommit(true).createHashDir(objPath));
+        System.out.println("Branch created: " +name);
+        handleCheckout(name);
+
+    }
+    public static void handleCheckout(String name){
+        try {
+            Ref HEAD = new Ref("HEAD");
+
+            Boolean valid = false;
+            String head = null;
+
+            if (Files.exists(Paths.get(refsPath+"/"+name))) {
+                //Branch Found
+                valid=true;
+                HEAD.changeHead(name);
+                Branch branch = HEAD.getBranch();
+                head = new String(branch.readReference(), StandardCharsets.UTF_8);
+            }
+            if (Files.exists(Paths.get(objPath+"/"+name.substring(0,2)+"/"+name.substring(2)))) {
+                //Commit Found
+                valid=true;
+                head = name;
+            }
+            if (valid==false) {
+                System.out.println("Couldnt Checkout, invalid name");
+                return;
+            }
+            File directory = new File(currentDirectory);
+            for (File file: directory.listFiles()){
+                if (!file.getName().equals(directoryPath)){
+                    Files.delete(Paths.get(file.getPath()));
+
+                }
+            }
+            handleFetch(head);
+            System.out.println("Checkout to ->"+name);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void handleStatus(Boolean isTrack) {
+        Ref HEAD = new Ref("HEAD");
+
         File statusDirectory = new File(currentDirectory);
         File[] statusFiles = statusDirectory.listFiles();
         List<String> statusNames = new ArrayList<>();
         List<Long> statusModified = new ArrayList<>();
-
+        Branch branch = HEAD.getBranch();
         // Read previous commit's information
         readPreviousCommit(statusNames, statusModified, null);
         if (statusNames.isEmpty()) {
             System.out.println("No Commits Found");
             return;
         } else if (!isTrack) {
-            System.out.println("Last snapshot at: "+new String(master.readSnapTime(),StandardCharsets.UTF_8));
+            System.out.println("Last snapshot at: "+new String(branch.readSnapTime(),StandardCharsets.UTF_8));
         }
 
         assert statusFiles != null;
@@ -180,30 +225,40 @@ public class Commands {
         return null;
     }
 
-    private static void readPreviousCommit(List<String> files, List<Long> modifiedTimes, List<String> hashes) {
+    private static int readPreviousCommit(List<String> files, List<Long> modifiedTimes, List<String> hashes ) {
         try {
-            if (Files.exists(Paths.get(master.path()))) {
-                String head = new String(master.readReference(), StandardCharsets.UTF_8);
-                List<String> lines = Files.readAllLines(Objects.requireNonNull(getObj(head)));
-                for (String line : lines.subList(1, lines.size())) {
-                    String[] splitLine = line.split("\\s+"); // Use "\\s+" as the delimiter
-                    if (hashes != null) {
-                        hashes.add(splitLine[0]);
-                    }
-                    files.add(String.join(" ", Arrays.copyOfRange(splitLine, 1, splitLine.length - 1)));
-                    modifiedTimes.add(Long.parseLong(splitLine[splitLine.length - 1]));
-                }
+            Ref HEAD = new Ref("HEAD");
+            Branch branch = HEAD.getBranch();
+
+            if(branch==null){
+                System.out.println("HEAD is detached cannot commit");
+                return 1;
             }
-        } catch (IOException e) {
+
+            if (new String(gitHelper.readFileBytes(branch.getPath())).equals("")){return 0;}
+            String commit =new String(branch.readReference(),StandardCharsets.UTF_8);
+
+            List<String> lines = Files.readAllLines(Objects.requireNonNull(getObj(commit)));
+            for (String line : lines.subList(1, lines.size())) {
+                String[] splitLine = line.split("\\s+"); // Use "\\s+" as the delimiter
+                if (hashes != null) {
+                    hashes.add(splitLine[0]);
+                }
+                files.add(String.join(" ", Arrays.copyOfRange(splitLine, 1, splitLine.length - 1)));
+                modifiedTimes.add(Long.parseLong(splitLine[splitLine.length - 1]));
+            }
+
+        }catch (IOException e){
             e.printStackTrace();
-        }
+    }
+        return 2;
+
     }
 
     private static void createFileInCurrentDirectory(String fileName, byte[] content) {
         Path filePath = Paths.get(currentDirectory, fileName);
         try {
             Files.write(filePath, content);
-            System.out.println("File '" + fileName + "' created in current directory.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -11,7 +11,8 @@ public class CLIInherit {
         switch (arg) {
             case "init" -> Commands.handleInit();
             case "commit" -> Commands.handleCommit();
-            case "fetch" -> Commands.handleFetch();
+            case "branch" -> Commands.handleBranch(args[1]);
+            case "checkout" -> Commands.handleCheckout(args[1]);
             case "status" -> Commands.handleStatus();
             case "find" -> Commands.getObj(args[1]);
             case "info" -> Commands.handleInfo(args[1]);
